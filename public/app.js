@@ -10,7 +10,7 @@ Vue.http.options.emulateJSON = true;
 var app = new Vue({
   el: '#app',
   data: {
-	id : '',  
+	  id : '',
     name: '',
     surname: '',
     users: []
@@ -49,7 +49,7 @@ var app = new Vue({
         return false;
       }
 
-      var postData = {name: this.name, surname: this.surname};
+      var postData = {method:'add',name: this.name, surname: this.surname};
 
       this.$http.post('../api/api.php', postData)
         .then(function(response) {
@@ -67,8 +67,22 @@ var app = new Vue({
         });
 
     },
-	myFunction : function(data){
-		alert(data);
-	}  
+	myFunction : function(id, index){
+		alert(id +"/"+index);
+    //borro el elemento del array
+    this.users.splice(this.users.indexOf(index), 1);
+
+    var postData = {method:'delete',id: id};
+
+    this.$http.post('../api/api.php', postData)
+      .then(function(response) {
+        console.log('se borro');
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+
+	}
   }
 })

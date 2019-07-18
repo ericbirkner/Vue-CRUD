@@ -3,23 +3,35 @@
   <head>
     <meta charset="utf-8" />
     <title>Vue.js with PHP Api</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   </head>
   <body>
-    <div id="app">
+    <div id="app" class="container-fluid">
 
       <h1>VueJs</h1>
 
       <form method="post" v-on:submit.prevent="onSubmit">
-        <input type="text" v-model="name" placeholder="Ad" required>
-        <input type="text" v-model="surname" placeholder="Soyad" required>
+        <input type="text" v-model="name" placeholder="name" required>
+        <input type="text" v-model="surname" placeholder="username" required>
         <button>agregar</button>
       </form>
 
       <h1>usuarios</h1>
 
-      <ul>
-        <li v-for="user in users">
-          <span @click="myFunction(user.id)">{{user.id}} {{user.name}} {{user.surname}}</span>
+      <ul class="list-group">
+        <li v-for="(user, index) in users" class="list-group-item d-flex justify-content-between align-items-center">
+          {{user.name}} {{user.surname}}
+          <span><button type="button" class="btn btn-danger" @click="myFunction(user.id, index)">Eliminar</button></span>
         </li>
       </ul>
 
