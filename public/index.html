@@ -14,6 +14,14 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<style>
+.fade-enter-active, .fade-leave-active {
+transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+opacity: 0;
+}
+</style>
   </head>
   <body>
     <div id="app" class="container-fluid">
@@ -27,23 +35,25 @@
         <button class="btn btn-primary">agregar</button>
       </form>
       <hr/>
-      <div v-show="form_visible">
 
-        <form method="post" v-on:submit.prevent="saveEdit" >
-        <div class="form-group">
-          <label for="name">Name:</label>
-          <input type="text" class="form-control" id="name" v-model="name_edit" required>
-        </div>
-        <div class="form-group">
-          <label for="username">Username:</label>
-          <input type="text" class="form-control" id="username" v-model="username_edit" required>
-        </div>
-        <input type="hidden" name="id" v-model="id">
-        <button @click="{{form_visible=false}}" class="btn btn-secondary">Cancelar</button>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-      </form>
+      <transition name='fade'>
+      <template v-if="form_visible">
+          <form method="post" v-on:submit.prevent="saveEdit" >
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" v-model="name_edit" required>
+          </div>
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" id="username" v-model="username_edit" required>
+          </div>
+          <input type="hidden" name="id" v-model="id">
+          <button @click="{{form_visible=false}}" class="btn btn-secondary">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
       <hr/>
-    </div>
+    </template>
+   </transition>
 
       <h1>usuarios</h1>
 
