@@ -20,21 +20,45 @@
 
       <h1>VueJs</h1>
 
-      <form method="post" v-on:submit.prevent="onSubmit">
-        <input type="text" v-model="name" placeholder="name" required>
-        <input type="text" v-model="surname" placeholder="username" required>
-        <button>agregar</button>
+      <form method="post" v-on:submit.prevent="onSubmit" class="form-inline">
+
+        <input type="text" v-model="name" placeholder="name" required class="form-control">
+        <input type="text" v-model="surname" placeholder="username" required class="form-control">
+        <button class="btn btn-primary">agregar</button>
       </form>
+      <hr/>
+      <div v-show="form_visible">
+
+        <form method="post" v-on:submit.prevent="saveEdit" >
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" class="form-control" id="name" v-model="name_edit" required>
+        </div>
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" class="form-control" id="username" v-model="username_edit" required>
+        </div>
+        <input type="hidden" name="id" v-model="id">
+        <button @click="{{form_visible=false}}" class="btn btn-secondary">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </form>
+      <hr/>
+    </div>
 
       <h1>usuarios</h1>
 
       <ul class="list-group">
         <li v-for="(user, index) in users" class="list-group-item d-flex justify-content-between align-items-center">
           {{user.name}} {{user.surname}}
-          <span><button type="button" class="btn btn-danger" @click="myFunction(user.id, index)">Eliminar</button></span>
+          <span>
+            <button type="button" class="btn btn-warning" @click="edit(user.id, user.name, user.surname)">Editar</button>
+            <button type="button" class="btn btn-danger" @click="myFunction(user.id, index)">Eliminar</button>
+
+          </span>
         </li>
       </ul>
 
+      <pre>{{ $data }}</pre>
     </div>
 
     <script src="lib/vue.min.js"></script>

@@ -42,6 +42,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   }
 
+
+  if($_POST['method']=="edit"){
+      $name = safeInput($_POST['name']);
+      $username = safeInput($_POST['username']);
+      $user_id = safeInput($_POST['id']);
+
+      if ($name && $username) {
+
+        $query = $db->prepare("UPDATE users set name = :name, username= :username WHERE user_id =:id");
+        $query->execute(['name' => $name, 'username' => $username, 'id' => $user_id]);
+
+        $json['status'] = 'ok';
+
+      }else{
+        $json['status'] = 'fail';
+      }
+
+  }
+
   if($_POST['method']=="delete"){
     $id = safeInput($_POST['id']);
     $query = $db->prepare("delete from users where user_id =:id");

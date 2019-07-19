@@ -13,6 +13,9 @@ var app = new Vue({
 	  id : '',
     name: '',
     surname: '',
+    form_visible: false,
+    name_edit: '',
+    username_edit: '',
     users: []
   },
   created: function() {
@@ -68,7 +71,7 @@ var app = new Vue({
 
     },
 	myFunction : function(id, index){
-		alert(id +"/"+index);
+		console.log(id +"/"+index);
     //borro el elemento del array
     this.users.splice(this.users.indexOf(index), 1);
 
@@ -83,6 +86,37 @@ var app = new Vue({
       });
 
 
+	},
+  edit : function(id,name, username){
+
+		this.form_visible= true;
+    this.name_edit = name;
+    this.id = id;
+    this.username_edit = username;
+
+	},
+  saveEdit : function(id,name, username){
+
+		var postData = {method:'edit',name: this.name_edit, username: this.username_edit, id: this.id};
+    console.log(postData)
+    this.$http.post('../api/api.php', postData)
+      .then(function(response) {
+
+        if (response.body.status == 'ok') {
+          console.log('ok')
+        }
+
+        this.name_edit = '';
+        this.username_edit = '';
+        this.id = '';
+        this.form_visible = false;
+        this.users= [];
+        this.fetchData();
+
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
 	}
   }
 })
