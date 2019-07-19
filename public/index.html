@@ -51,7 +51,7 @@
         <li v-for="(user, index) in users" class="list-group-item d-flex justify-content-between align-items-center">
           {{user.name}} {{user.surname}}
           <span>
-            <button type="button" class="btn btn-warning" @click="edit(user.id, user.name, user.surname)">Editar</button>
+            <button type="button" class="btn btn-warning" @click="edit(user.id, user.name, user.surname,index)">Editar</button>
             <button type="button" class="btn btn-danger" @click="myFunction(user.id, index)">Eliminar</button>
 
           </span>

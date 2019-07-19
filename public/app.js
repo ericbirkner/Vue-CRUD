@@ -13,6 +13,7 @@ var app = new Vue({
 	  id : '',
     name: '',
     surname: '',
+    indice:'',
     form_visible: false,
     name_edit: '',
     username_edit: '',
@@ -87,15 +88,16 @@ var app = new Vue({
 
 
 	},
-  edit : function(id,name, username){
+  edit : function(id,name, username,index){
 
 		this.form_visible= true;
     this.name_edit = name;
     this.id = id;
+    this.indice = index;
     this.username_edit = username;
 
 	},
-  saveEdit : function(id,name, username){
+  saveEdit : function(){
 
 		var postData = {method:'edit',name: this.name_edit, username: this.username_edit, id: this.id};
     console.log(postData)
@@ -103,15 +105,20 @@ var app = new Vue({
       .then(function(response) {
 
         if (response.body.status == 'ok') {
-          console.log('ok')
+
+          this.users.splice(this.index, 1, {"id": this.id,"name": this.name_edit,"surname": this.username_edit})
+          this.name_edit = '';
+          this.username_edit = '';
+          this.id = '';
+          this.index ='';
+          this.form_visible = false;
+          /*
+          this.users= [];
+          this.fetchData();
+          */
         }
 
-        this.name_edit = '';
-        this.username_edit = '';
-        this.id = '';
-        this.form_visible = false;
-        this.users= [];
-        this.fetchData();
+
 
       })
       .catch(function(error) {
