@@ -1,2 +1,2 @@
 # tutorial-de-Vue
-aprendiendo esta shit
+Crud php/vue
